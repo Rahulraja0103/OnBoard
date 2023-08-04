@@ -201,6 +201,24 @@ def addShift():
     # Handle other cases or display error page if needed
     return render_template('addShift.html')
 
+# for all shifts
+@app.route('/shifts', methods=['GET'])
+def allShifts():
+    # Create a MySQL cursor
+    cur = mysql.connection.cursor()
+
+    # Fetch all shifts from the database
+    query_all_shifts = "SELECT * FROM company_shifts;"
+    cur.execute(query_all_shifts)
+    shift_data = cur.fetchall()
+
+    print(shift_data)
+
+    # Close the cursor
+    cur.close()
+
+    # Render the template and pass the shifts data to it
+    return render_template('shifts.html',shifts=shift_data)
 
 
 

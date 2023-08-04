@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Shifts</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>All Shifts</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Shift ID</th>
+                <th>Company ID</th>
+                <th>Shift Date</th>
+                <th>Shift Type</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Department Name</th>
+                <th>Supervisor Name</th>
+                <th>No. of Workers</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shift in shifts %}
+            <tr>
+                <td>{{ shift['shift_id'] }}</td>
+                <td>{{ shift['companyId'] }}</td>
+                <td>{{ shift['shift_date'] }}</td>
+                <td>{{ shift['shift_type'] }}</td>
+                <td>{{ shift['start_time'] }}</td>
+                <td>{{ shift['end_time'] }}</td>
+                <td>{{ shift['department_name'] }}</td>
+                <td>{{ shift['supervisor_name'] }}</td>
+                <td>{{ shift['num_workers'] }}</td>
+                <td>{{ shift['notes'] }}</td>
+                <td class="actions">
+                    <form method="post" action="/bookShift">
+                        <input type="hidden" name="shiftId" value="{{ shift['shift_id'] }}">
+                        <button type="submit">Book</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
