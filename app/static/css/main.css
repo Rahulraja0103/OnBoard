@@ -1,0 +1,109 @@
+/* RahulRaj Vardhanapu --8813996 */
+.container {
+    display:block;
+    margin-left: 200px;
+    margin-right: 200px;
+  }
+
+nav ul{
+    list-style-type: none;
+    padding: 0;
+    border: 3px solid #03045E;
+    height: 60px;
+    box-shadow: 0 0 10px #2c2c2c;
+    background-color: #b5e6fb;
+    text-align: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+}
+nav ul li{
+    display: inline-block;
+    padding: 20px;
+    text-decoration: none;
+    text-decoration-color: black;
+    font-size:large;
+    font-weight:bolder;
+    text-align: center;
+    color: black;
+    
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 73%;
+    
+  }
+.loginbutton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30px;
+    width: 50%;
+    border-radius: 8px;
+}
+.registerbutton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30px;
+    width: 50%;
+    border-radius: 8px;
+}
+  a{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #337ab7;
+    text-decoration: none;
+  }
+  .addButton{
+    background-color: darkblue;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+    font-family : Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin: 0 0.25em 0 0;
+    padding: 0.78571429em 1.5em 0.78571429em;
+    border-radius: 0.28571429rem;
+    font-weight: 700;
+    line-height: 1em;
+  }
+  .updateButton{
+    background-color: #2185d0;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+    font-family : Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin: 0 0.25em 0 0;
+    padding: 0.78571429em 1.5em 0.78571429em;
+    border-radius: 0.28571429rem;
+    font-weight: 700;
+    line-height: 1em;
+    box-sizing: inherit;
+  }
+  .deleteButton{
+    background-color: #db2828;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+    font-family : Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin: 0 0.25em 0 0;
+    padding: 0.78571429em 1.5em 0.78571429em;
+    border-radius: 0.28571429rem;
+    font-weight: 700;
+    line-height: 1em;
+  }
+  .completeButton{
+    background-color: lightseagreen;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+    font-family : Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin: 0 0.25em 0 0;
+    padding: 0.78571429em 1.5em 0.78571429em;
+    border-radius: 0.28571429rem;
+    font-weight: 700;
+    line-height: 1em;
+  }
+  
