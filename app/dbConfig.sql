@@ -43,4 +43,14 @@ CREATE TABLE company_shifts (
     FOREIGN KEY (companyId) REFERENCES company(companyId)
 );
 
+CREATE TABLE bookedShift (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    shift_id INT NOT NULL,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (userId),
+    FOREIGN KEY (shift_id) REFERENCES company_shifts (shift_id)
+);
+
+
 

@@ -41,7 +41,7 @@ def login():
 
     # Execute the query to find the user by email
         # Query the database for the user
-        query_user = "SELECT email,_password,firstname FROM users WHERE email = %s"
+        query_user = "SELECT userId,email,_password,firstname FROM users WHERE email = %s"
         cur.execute(query_user, (email,))
         query_user = cur.fetchone()
         
@@ -51,11 +51,16 @@ def login():
         query_company = cur.fetchone()
 
         if query_user:
-            session['firstname'] = query_user['firstname']
-            return redirect('/onBoard')  # Redirect to the Home page after successful login
+            #if bcrypt.verify(password, query_user['password']):
+                session['firstname'] = query_user['firstname']
+                session['email'] = query_user['email']
+                session['userId'] = query_user['userId']
+                return redirect('/onBoard')  # Redirect to the Home page after successful login
         elif query_company:
-             session['comp'] = query_company['comp_name']
-             return redirect('/company')  # Redirect to the Company page after successful login
+             #if bcrypt.verify(password, query_company['password']):
+                session['comp'] = query_company['comp_name']
+                session['email'] = query_company['email']
+                return redirect('/company')  # Redirect to the Company page after successful login
         else:
             error_msg = "Invalid credentials. Please try again."
             return render_template('login.html', error_msg=error_msg)
@@ -135,10 +140,10 @@ def registerCompany():
 
 
 
-@app.route("/onBoard")
-def onBoard():
-    #jobs = Jobs.query.all()
-    return render_template('onBoard.html')
+# @app.route("/onBoard")
+# def onBoard():
+#     #jobs = Jobs.query.all()
+#     return render_template('onBoard.html')
 
 @app.route("/company")
 def company():
@@ -212,13 +217,163 @@ def allShifts():
     cur.execute(query_all_shifts)
     shift_data = cur.fetchall()
 
-    print(shift_data)
+    # Create a dictionary to store company names with their respective companyId
+    company_names = {}
+
+    # Fetch company names based on companyId for each shift
+    for shift in shift_data:
+        company_id = shift['companyId']
+        if company_id not in company_names:
+            # Fetch company name from the database
+            query_company_name = "SELECT comp_name FROM company WHERE companyId = %s;"
+            cur.execute(query_company_name, (company_id,))
+            company_name = cur.fetchone()['comp_name']
+            company_names[company_id] = company_name
 
     # Close the cursor
     cur.close()
 
     # Render the template and pass the shifts data to it
-    return render_template('shifts.html',shifts=shift_data)
+    return render_template('shifts.html',shifts=shift_data, company_names=company_names)
+
+@app.route('/shiftDetails/<int:shift_id>', methods=['GET'])
+def shift_details(shift_id):
+    # Create a MySQL cursor
+    cur = mysql.connection.cursor()
+
+    # Fetch the specific shift details from the database based on the shift_id
+    query_shift_details = "SELECT * FROM company_shifts WHERE shift_id = %s;"
+    cur.execute(query_shift_details, (shift_id,))
+    shift = cur.fetchone()
+
+    # Close the cursor
+    cur.close()
+
+    # Render the template and pass the shift details to it
+    return render_template('shiftDetails.html', shift=shift)
+
+@app.route('/bookShift', methods=['POST'])
+def bookShift():
+    if request.method == 'POST':
+        # Check if the user is logged in before proceeding with the booking
+        if 'firstname' not in session and 'comp' not in session:
+            # User is not logged in. Redirect to the login page or display an error message.
+            return redirect(url_for('login'))
+
+        # Get the shift_id from the form submission
+        shift_id = request.form['shiftId']
+
+        # Determine the user type (either 'user' or 'company')
+        user_type = 'user' if 'firstname' in session else 'company'
+
+        # Get the user_id based on the user type and email
+        user_id = None
+        if user_type == 'user':
+            # For user, get user_id based on email
+            email = session['email']
+            cur = mysql.connection.cursor()
+            query_user_id = "SELECT userId FROM users WHERE email = %s"
+            cur.execute(query_user_id, (email,))
+            user_id = cur.fetchone()['userId']
+            cur.close()
+        elif user_type == 'company':
+            # For company, get user_id based on email
+            email = session['email']
+            cur = mysql.connection.cursor()
+            query_user_id = "SELECT companyId FROM company WHERE email = %s"
+            cur.execute(query_user_id, (email,))
+            user_id = cur.fetchone()['companyId']
+            cur.close()
+
+        # Create a MySQL cursor
+        cur = mysql.connection.cursor()
+
+        # Check if the shift is already booked by the user
+        query_check_booking = "SELECT * FROM bookedshift WHERE user_id = %s AND shift_id = %s"
+        cur.execute(query_check_booking, (user_id, shift_id))
+        existing_booking = cur.fetchone()
+
+        if existing_booking:
+            # The shift is already booked by the user. Handle accordingly (e.g., display a message).
+            message = "You have already booked this shift."
+        else:
+            # The shift is not booked by the user, so proceed with booking.
+
+            # Insert the booking into the booked_shifts table
+            query_book_shift = "INSERT INTO bookedshift (user_id, shift_id) VALUES (%s, %s)"
+            cur.execute(query_book_shift, (user_id, shift_id))
+
+            # Commit the changes to the database
+            mysql.connection.commit()
+
+            # Show a success message or handle the successful booking as needed.
+            message = "Shift successfully booked!"
+
+        # Close the cursor
+        cur.close()
+
+        # Redirect back to the allShifts page after booking
+        return redirect(url_for('allShifts'))
+
+    # Handle GET requests for the /bookShift endpoint if needed (e.g., redirect to another page).
+    return redirect(url_for('index'))  # Redirect to the home page or any other page as needed
+
+@app.route('/onBoard', methods=['GET'])
+def bookedShifts():
+    # Check if the user is logged in before proceeding to show booked shifts
+    if 'firstname' not in session and 'comp' not in session:
+        flash("Please log in to view booked shifts.", "error")
+        return redirect(url_for('login'))
+
+    # Create a MySQL cursor
+    cur = mysql.connection.cursor()
+
+    # Fetch all booked shifts by the current user from the database
+    #user_id = session.get('user_id')  # Assuming you have a session variable for user_id
+    userId = session.get('userId')
+
+    query_booked_shifts = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+                          "FROM bookedShift bs " \
+                          "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
+                          "JOIN company c ON cs.companyId = c.companyId " \
+                          "WHERE bs.user_id = %s;"
+    cur.execute(query_booked_shifts, (userId,))
+    booked_shifts = cur.fetchall()
+
+
+    # Close the cursor
+    cur.close()
+
+    # Render the template and pass the booked shifts data to it
+    return render_template('onBoard.html', booked_shifts=booked_shifts)
+
+
+@app.route('/bookedShiftDetails/<int:booking_id>', methods=['GET'])
+def bookedShiftDetails(booking_id):
+    # Check if the user is logged in before proceeding to show booked shift details
+    if 'firstname' not in session and 'comp' not in session:
+        flash("Please log in to view booked shift details.", "error")
+        return redirect(url_for('login'))
+
+    # Create a MySQL cursor
+    cur = mysql.connection.cursor()
+
+    # Fetch the booked shift details based on the booking_id
+    query_booked_shift_details = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+                                 "FROM bookedShift bs " \
+                                 "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
+                                 "JOIN company c ON cs.companyId = c.companyId " \
+                                 "WHERE bs.booking_id = %s;"
+    cur.execute(query_booked_shift_details, (booking_id,))
+    booked_shift_details = cur.fetchone()
+
+    # Close the cursor
+    cur.close()
+
+    # Render the template and pass the booked shift details to it
+    return render_template('bookedShiftDetails.html', booked_shift=booked_shift_details)
+
+
 
 
 
