@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnBoard</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <nav>
+        <div class="container" style="margin-top: 40px">
+             <!-- Navigation Panel -->
+                    <ul>
+                        <li style="color: black;"><a href="/onBoard">Home</a></li>
+                        <li><a href="/shifts">Shifts</a></li>
+                        <li><a href="/completedShifts">History</a></li>
+                        <li><a href="/register">About Us</a></li>
+                        <li><a href="/register">Feedback</a></li>
+                        <li><a href="/login">Log-Out</a></li>
+                    </ul>
+        </div>
+    </nav>
+</head>
+<body>
+    <h1>Welcome to Home page</h1>
+    <h1>Booked Shifts</h1>
+    {% for booked_shift in booked_shifts %}
+    <div class="card">
+        <p>Company Name: {{ booked_shift['comp_name'] }}</p>
+        <p>Shift Date: {{ booked_shift['shift_date'] }}</p>
+        <p>Shift Type: {{ booked_shift['shift_type'] }}</p>
+        <p>Booking Date: {{ booked_shift['booking_date'] }}</p>
+        <!-- Add other details you want to display in the card -->
+        <a href="{{ url_for('bookedShiftDetails', booking_id=booked_shift['booking_id']) }}">View Details</a>
+    </div>
+    {% endfor %}
+</body>
+</html>
