@@ -52,5 +52,35 @@ CREATE TABLE bookedShift (
     FOREIGN KEY (shift_id) REFERENCES company_shifts (shift_id)
 );
 
+CREATE TABLE shiftStatus (
+    statusId INT AUTO_INCREMENT PRIMARY KEY,
+    statusName VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE paymentStatus (
+    statusId INT AUTO_INCREMENT PRIMARY KEY,
+    statusName VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE company_shifts
+ADD COLUMN shiftStatus_Id INT,
+ADD CONSTRAINT fk_shift_status
+FOREIGN KEY (shiftStatus_Id) REFERENCES shiftStatus(statusId);
+
+ALTER TABLE bookedShift
+ADD COLUMN paymentStatus_Id INT,
+ADD CONSTRAINT fk_payment_status
+FOREIGN KEY (paymentStatus_Id) REFERENCES paymentStatus(statusId);
+
+ALTER TABLE company_shifts
+ADD COLUMN pay_rate FLOAT
+
+
+
+
+
+
+
+
 
 

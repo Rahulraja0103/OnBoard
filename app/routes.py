@@ -1,7 +1,9 @@
-from flask import render_template, url_for, flash, redirect, request, send_file,session
+from flask import render_template, url_for, flash, redirect, request, send_file,session,jsonify
 from app import app,mysql
 from passlib.hash import sha256_crypt
 import bcrypt
+import datetime
+from datetime import datetime
 
 # # Function to run SQL commands from config.sql
 # def run_sql_file(filename):
@@ -28,6 +30,14 @@ import bcrypt
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/companyTab")
+def companyTab():
+    return render_template("companyTab.html")
+
+@app.route("/userTab")
+def userTab():
+    return render_template("userTab.html")
 
 #Routes for Login Page
 @app.route("/login",methods=["GET", "POST"])
@@ -139,28 +149,9 @@ def registerCompany():
     return render_template('registerCompany.html')  # Assuming you have a 'register.html' template
 
 
-
-# @app.route("/onBoard")
-# def onBoard():
-#     #jobs = Jobs.query.all()
-#     return render_template('onBoard.html')
-
 @app.route("/company")
 def company():
     return render_template("company.html")
-
-#Routes for Register Company Page
-# @app.route('/addShift', methods=['GET'])
-# def addShift():
-#     if request.method == 'GET':
-#         cur = mysql.connection.cursor()
-
-#         query_companies = "select companyId,comp_name from company;"
-#         cur.execute(query_companies)
-#         shift_data = cur.fetchone()
-
-#     return render_template('addShift.html', shifts=shift_data)
-
 
 #Routes for Register Company Page
 @app.route('/addShift', methods=['GET', 'POST'])
@@ -185,13 +176,15 @@ def addShift():
         supervisor_name = request.form['supervisorname']
         num_workers = request.form['noOfWorkers']
         notes = request.form['notes']
+        pay = request.form['payrate']
+        shiftstatusId = 1 #default -> Pending
 
         # Create a MySQL cursor
         cur = mysql.connection.cursor()
 
         # Insert the shift into the database
-        query_insert_shift = "INSERT INTO company_shifts (companyId, shift_date, shift_type, start_time, end_time, department_name, supervisor_name, num_workers, notes) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (companyId, shift_date, shift_type, start_time, end_time, department_name, supervisor_name, num_workers, notes)
+        query_insert_shift = "INSERT INTO company_shifts (companyId, shift_date, shift_type, start_time, end_time, department_name, supervisor_name, num_workers, notes,pay_rate,shiftStatus_Id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s)"
+        values = (companyId, shift_date, shift_type, start_time, end_time, department_name, supervisor_name, num_workers, notes,pay,shiftstatusId)
         cur.execute(query_insert_shift, values)
 
         # Commit the changes to the database
@@ -213,8 +206,10 @@ def allShifts():
     cur = mysql.connection.cursor()
 
     # Fetch all shifts from the database
-    query_all_shifts = "SELECT * FROM company_shifts;"
-    cur.execute(query_all_shifts)
+    #current_date = datetime.date.today().strftime('%Y-%m-%d') #Prashanth
+    current_date = datetime.now().strftime('%Y-%m-%d') #Prashanth
+    query_all_shifts = "SELECT * FROM company_shifts WHERE shift_date >= %s ORDER BY shift_date;" #Prashanth
+    cur.execute(query_all_shifts,(current_date,)) #Prashanth
     shift_data = cur.fetchall()
 
     # Create a dictionary to store company names with their respective companyId
@@ -262,6 +257,7 @@ def bookShift():
 
         # Get the shift_id from the form submission
         shift_id = request.form['shiftId']
+        paymentStatus = 1 #Default
 
         # Determine the user type (either 'user' or 'company')
         user_type = 'user' if 'firstname' in session else 'company'
@@ -295,25 +291,41 @@ def bookShift():
 
         if existing_booking:
             # The shift is already booked by the user. Handle accordingly (e.g., display a message).
-            message = "You have already booked this shift."
+            flash("You have already booked this shift.", "warning")
+            #return render_template('shifts.html', messages=get_flashed_messages()) #Prashanth
+            return redirect(url_for('allShifts'))
         else:
             # The shift is not booked by the user, so proceed with booking.
 
             # Insert the booking into the booked_shifts table
-            query_book_shift = "INSERT INTO bookedshift (user_id, shift_id) VALUES (%s, %s)"
-            cur.execute(query_book_shift, (user_id, shift_id))
+            query_book_shift = "INSERT INTO bookedshift (user_id, shift_id,paymentStatus_Id) VALUES (%s, %s,%s)"
+            cur.execute(query_book_shift, (user_id, shift_id,paymentStatus))
 
+            # Update the number of workers for the booked shift in the shift table
+            query_update_shift = "UPDATE company_shifts SET num_workers = num_workers - 1 WHERE shift_id = %s" #Prashanth
+            cur.execute(query_update_shift, (shift_id,))
             # Commit the changes to the database
             mysql.connection.commit()
 
             # Show a success message or handle the successful booking as needed.
             message = "Shift successfully booked!"
 
+             #Prashanth
+            userId = session.get('userId')
+
+            query_booked_shifts = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+                          "FROM bookedShift bs " \
+                          "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
+                          "JOIN company c ON cs.companyId = c.companyId " \
+                          "WHERE bs.user_id = %s;"
+            cur.execute(query_booked_shifts, (userId,))
+            booked_shifts = cur.fetchall()
+
         # Close the cursor
         cur.close()
 
         # Redirect back to the allShifts page after booking
-        return redirect(url_for('allShifts'))
+        return render_template('onBoard.html', booked_shifts=booked_shifts) #Prashanth
 
     # Handle GET requests for the /bookShift endpoint if needed (e.g., redirect to another page).
     return redirect(url_for('index'))  # Redirect to the home page or any other page as needed
@@ -332,12 +344,16 @@ def bookedShifts():
     #user_id = session.get('user_id')  # Assuming you have a session variable for user_id
     userId = session.get('userId')
 
-    query_booked_shifts = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+    #current_date = datetime.date.today().strftime('%Y-%m-%d') #Prashanth
+    current_date = datetime.now().strftime('%Y-%m-%d') #Prashanth
+        #current_time = current_datetime.time()
+
+    query_booked_shifts = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name, cs.shiftStatus_Id " \
                           "FROM bookedShift bs " \
                           "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
                           "JOIN company c ON cs.companyId = c.companyId " \
-                          "WHERE bs.user_id = %s;"
-    cur.execute(query_booked_shifts, (userId,))
+                          "WHERE bs.user_id = %s AND cs.shift_date >= %s ORDER BY shift_date;;"
+    cur.execute(query_booked_shifts, (userId,current_date,))
     booked_shifts = cur.fetchall()
 
 
@@ -359,7 +375,7 @@ def bookedShiftDetails(booking_id):
     cur = mysql.connection.cursor()
 
     # Fetch the booked shift details based on the booking_id
-    query_booked_shift_details = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+    query_booked_shift_details = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name, cs.shiftStatus_Id " \
                                  "FROM bookedShift bs " \
                                  "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
                                  "JOIN company c ON cs.companyId = c.companyId " \
@@ -372,6 +388,89 @@ def bookedShiftDetails(booking_id):
 
     # Render the template and pass the booked shift details to it
     return render_template('bookedShiftDetails.html', booked_shift=booked_shift_details)
+
+#completed shifts
+@app.route('/completedShifts', methods=['GET'])
+def completedShifts():
+    # Check if the user is logged in before proceeding to show booked shifts
+    if 'firstname' not in session and 'comp' not in session:
+        flash("Please log in to view booked shifts.", "error")
+        return redirect(url_for('login'))
+
+    # Create a MySQL cursor
+    cur = mysql.connection.cursor()
+
+    # Fetch all booked shifts by the current user from the database
+    #user_id = session.get('user_id')  # Assuming you have a session variable for user_id
+    userId = session.get('userId')
+
+    #current_date = datetime.date.today().strftime('%Y-%m-%d') #Prashanth
+    current_date = datetime.now().strftime('%Y-%m-%d') #Prashanth
+    #query_all_shifts = "SELECT * FROM company_shifts WHERE shift_date >= %s ORDER BY shift_date;" #Prashanth
+    #cur.execute(query_all_shifts,(current_date,)) #Prashanth
+
+    query_completed_shifts = "SELECT bs.*, cs.shift_date, cs.shift_type, c.comp_name " \
+                          "FROM bookedShift bs " \
+                          "JOIN company_shifts cs ON bs.shift_id = cs.shift_id " \
+                          "JOIN company c ON cs.companyId = c.companyId " \
+                          "WHERE bs.user_id = %s AND cs.shift_date < %s ORDER BY shift_date;"
+    cur.execute(query_completed_shifts, (userId,current_date,))
+    completed_shifts = cur.fetchall()
+
+
+
+    # Close the cursor
+    cur.close()
+
+    # Render the template and pass the booked shifts data to it
+    return render_template('completedShifts.html', completed_shifts=completed_shifts)
+
+@app.route('/update_status/<int:shift_id>', methods=['POST'])
+def update_status(shift_id):
+    if request.method == 'POST':
+        new_status = request.form.get('new_status')
+        print(new_status)
+
+        # Validate the new_status value
+        valid_status_values = ['1', '2', '3']  # Valid status values
+        if new_status not in valid_status_values:
+            flash("Invalid status.", "error")
+            return redirect(url_for('bookedShifts'))
+
+        # Check if the shift is currently within the start and end times
+        cur = mysql.connection.cursor()
+        query_fetch_shift = "SELECT start_time, end_time FROM company_shifts WHERE shift_id = %s"
+        cur.execute(query_fetch_shift, (shift_id,))
+        shift_times = cur.fetchone()
+        cur.close()
+
+        current_datetime = datetime.now()
+        current_time = current_datetime.time()
+        shift_start_time = shift_times['start_time']
+        shift_end_time = shift_times['end_time']
+
+         # Convert shift_start_time and shift_end_time to datetime.time objects
+        shift_start_time = datetime.strptime(str(shift_start_time), '%H:%M:%S').time()
+        shift_end_time = datetime.strptime(str(shift_end_time), '%H:%M:%S').time()
+
+        if shift_start_time <= current_time <= shift_end_time:
+            # Update the status in the database
+            cur = mysql.connection.cursor()
+            query_update_status = "UPDATE company_shifts SET shiftStatus_Id = %s WHERE shift_id = %s"
+            cur.execute(query_update_status, (new_status, shift_id))
+            mysql.connection.commit()
+
+            userId = session.get('userId')
+
+            #current_date = datetime.date.today().strftime('%Y-%m-%d') #Prashanth
+
+            cur.close()
+
+            flash("Shift status updated.", "success")
+            return redirect(url_for('bookedShifts'))
+        else:
+            flash("Shift is not currently active.", "error")
+            return redirect(url_for('bookedShifts'))
 
 
 
