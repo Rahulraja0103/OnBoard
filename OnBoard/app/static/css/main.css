@@ -1,0 +1,247 @@
+/* RahulRaj Vardhanapu --8813996 */
+/* Apply a clearfix to the container to properly contain floated elements */
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.container{
+  display: block;
+}
+
+nav .containerMain {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px; /* Adjust the maximum width as needed */
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #b2e6fd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav .container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px; /* Adjust the maximum width as needed */
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #6ec2e6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+nav ul {
+  list-style-type: none;
+  margin-left: 20px auto;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 10px auto;
+  padding: 0;
+}
+
+nav ul li a {
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: #03045E;
+  color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+
+  body {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px; /* Adjust the maximum width as needed */
+    text-align: left;
+
+    
+  }
+
+.innerForm{
+  margin: 0 0 15px;
+}
+.mainForm{
+  margin-top: 24x;
+  margin-bottom: 24x;
+}
+.loginbutton{
+  width: 50%;
+  font-size: 22px;
+  background-color: #012a4a ;
+  /* rgb(77, 77, 193); */
+  color: white;
+  font-family: Work Sans, sans-serif;
+  border: 0px;
+  padding: 10px;
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+.registerbutton{
+  width: 50%;
+  font-size: 22px;
+  background-color: #012a4a ;
+  /* rgb(77, 77, 193); */
+  color: white;
+  font-family: Work Sans, sans-serif;
+  border: 0px;
+  padding: 10px;
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+  a{
+    font-family: Work Sans, sans-serif;
+    color: #337ab7;
+    text-decoration: none;
+  }
+
+  .backButton{
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-left: 20px;
+  }
+  
+  .headerLogo{
+    width: 160px;
+    height: 130px;
+    float: left;
+    top: 20px;
+    margin-left: 40px;
+  }
+  .headerLogocred{
+    width: 250px;
+    height: 150px;
+    top: 20px;
+    bottom: 30px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+  }
+  div .btn-group {
+    display:inline-block;
+    
+  }
+  .col-sm-6{
+    display: inline;
+  }
+  a{
+    padding: 20px;
+    text-decoration: none;
+  }
+form, .formView{
+    margin-top: 50px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+  form, .formData{
+    width: 50%;
+    /* border: 3px solid white; */
+    /* box-shadow: 0 0 10px #2c2c2c; */
+    padding: 50px;
+    margin: 20px auto;
+    color: darkblue;
+    background-color:  #7aa3cd; 
+    /* #7aa3cd; */
+    border-radius: 5px;
+    font-family: Work Sans, sans-serif;
+    text-align: center;
+}
+label{
+    width: 70%;
+    display: inline-block; 
+    font-size: 18px;
+    color: black;
+    text-align: left;
+}
+label .login-label{
+    width: 70%;
+    display: inline-block; 
+    font-size: 18px;
+    color: black;
+    text-align: left;
+}
+/*
+input[type='file']{
+    color:white;
+    font-size:35px;
+    width: 100%;
+    
+  }
+*/
+  /* input[type=file]::file-selector-button {
+    border: 2px solid #6c5ce7;
+    padding: 2px 4px;
+    border-radius: 2px;
+    background-color: #a29bfe;
+    transition: 1s;
+    width:fit-content;
+  } */
+ input:not([type="radio"]), select{
+    font-size: 16px;
+    font-family: Work Sans, sans-serif;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+input:not([type="radio"]){
+    width: 70%;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-family: Work Sans, sans-serif;
+} 
+select{
+    width: 75%;
+    /* 190px; */
+    margin-top: 5px;
+    margin-bottom: 10px;
+    height: 45px;
+    font-family: Work Sans, sans-serif;
+}
+input[type="submit"]{
+    width: 75%;
+    font-size: 22px;
+    background-color: #03045E ;
+    /* rgb(77, 77, 193); */
+    color: white;
+    font-family: Work Sans, sans-serif;
+    border: 0px;
+    padding: 10px;
+    height: 100px;
+    box-shadow: 4px 4px 0px #8c087a;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+input[type="submit"]:active{
+    box-shadow: -4px -4px 0px #8c087a;
+}

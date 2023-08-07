@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Shifts</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'nav.html' %}
+</head>
+<body>
+    <!-- ... Your existing code ... -->
+
+<div class="container">
+    <h1 class="mt-4">All Shifts</h1>
+    <div class="row mt-4">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        {% for shift in shifts %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ shift['shift_type'] }}</h5>
+                    <p class="card-text">Company Name: {{ company_names[shift['companyId']] }}</p>
+                    <p class="card-text">Shift Date: {{ shift['shift_date'] }}</p>
+                    <p class="card-text">Start Time: {{ shift['start_time'] }}</p>
+                    <p class="card-text">End Time: {{ shift['end_time'] }}</p>
+                    <!-- Add other shift details as needed -->
+                    <a href="/shiftDetails/{{ shift['shift_id'] }}" class="btn btn-primary">View Details</a>
+                    <form method="post" action="/bookShift"  id="bookForm{{ shift['shift_id'] }}">
+                        <input type="hidden" name="shiftId" value="{{ shift['shift_id'] }}">
+                        <button type="button" class="btn btn-success mt-2" onclick="showConfirmation('{{ shift['shift_id'] }}')">Book</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!--#Prashanth-->
+<script>
+    function showConfirmation(shiftId) {
+        if (confirm("Are you sure you want to book this shift?")) {
+            // If the user confirms, submit the form
+            document.getElementById('bookForm' + shiftId).submit();
+        } else {
+            // If the user cancels, do nothing
+        }
+    }
+</script>
+<!-- Include Bootstrap JS and Popper.js (required for Bootstrap components) -->
+<!-- ... Your existing JS includes ... -->
+
+
+    <!-- Include Bootstrap JS and Popper.js (required for Bootstrap components) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-daaIowJp8zxr90msYjKn0F9xL9sO/YKBb6H+5pGjkfz5hBiP5z7fe7rdVW2jcR29" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-PDzHRtvPTVF6cBK9E2fBCtfy2vdxdkRFED+8Abx/b3NR6S+WnHNbTaBfy1aD/vt0" crossorigin="anonymous"></script>
+</body>
+</html>

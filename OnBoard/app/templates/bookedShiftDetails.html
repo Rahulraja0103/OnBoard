@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Shift Details</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'nav.html' %}
+</head>
+<body>
+    <h1>Booked Shift Details</h1>
+    <p>Company Name: {{ booked_shift['comp_name'] }}</p>
+    <p>Shift Date: {{ booked_shift['shift_date'] }}</p>
+    <p>Shift Type: {{ booked_shift['shift_type'] }}</p>
+    <p>Booking Date: {{ booked_shift['booking_date'] }}</p>
+    <form method="post" action="{{ url_for('update_status', shift_id=booked_shift['shift_id']) }}">
+        <!-- <input type="hidden" name="new_status" value="completed"> -->
+        <label for="new_status">Status:</label>
+        <select id="new_status" name="new_status">
+            <option value="1" {% if booked_shift['shiftStatus_Id'] == 1 %}selected{% endif %}>Pending</option>
+            <option value="2" {% if booked_shift['shiftStatus_Id'] == 2 %}selected{% endif %}>In Progress</option>
+            <option value="3" {% if booked_shift['shiftStatus_Id'] == 3 %}selected{% endif %}>Completed</option>
+        </select>
+        <button type="submit">Update Status</button>
+    </form>
+</body>
+</html>
