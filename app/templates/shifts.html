@@ -11,8 +11,8 @@
     <!-- ... Your existing code ... -->
 
 <div class="container">
-    <h1 class="mt-4">All Shifts</h1>
-    <div class="row mt-4">
+    <h1 style="text-align: center;">Available Shifts</h1>
+    <section class="grid1 grid2">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="flashes">
@@ -23,26 +23,27 @@
         {% endif %}
         {% endwith %}
         {% for shift in shifts %}
+        <div class="cards1">
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">{{ shift['shift_type'] }}</h5>
-                    <p class="card-text">Company Name: {{ company_names[shift['companyId']] }}</p>
-                    <p class="card-text">Shift Date: {{ shift['shift_date'] }}</p>
-                    <p class="card-text">Start Time: {{ shift['start_time'] }}</p>
-                    <p class="card-text">End Time: {{ shift['end_time'] }}</p>
+                    <h1 class="card-title">{{ shift['shift_type'] }}</h1>
+                    <h2 class="card-text">Company Name: {{ company_names[shift['companyId']] }}</h2>
+                    <h2 class="card-text">Shift Date: {{ shift['shift_date'] }}</h2>
+                    <!-- <p class="card-text">Start Time: {{ shift['start_time'] }}</p>
+                    <p class="card-text">End Time: {{ shift['end_time'] }}</p> -->
                     <!-- Add other shift details as needed -->
-                    <a href="/shiftDetails/{{ shift['shift_id'] }}" class="btn btn-primary">View Details</a>
+                    <a href="/shiftDetails/{{ shift['shift_id'] }}" class="btn btn-primary" style="display: block; font-weight: bold ; font-size: large; color: floralwhite; text-align: center; margin-top: 10px;">View Details</a>
                     <form method="post" action="/bookShift"  id="bookForm{{ shift['shift_id'] }}">
                         <input type="hidden" name="shiftId" value="{{ shift['shift_id'] }}">
-                        <button type="button" class="btn btn-success mt-2" onclick="showConfirmation('{{ shift['shift_id'] }}')">Book</button>
+                        <button type="button" class="btn_Book" onclick="showConfirmation('{{ shift['shift_id'] }}')">Book</button>
                     </form>
-                   
                 </div>
             </div>
-        </div>
-        {% endfor %}
+        </div>  
     </div>
+    {% endfor %}
+  </section>
 </div>
 
 <!--#Prashanth-->

@@ -8,16 +8,20 @@
     {% include 'nav.html' %}
 </head>
 <body>
-    <h1>Completed Shifts</h1>
+    <h1 style="text-align: center;">Completed Shifts</h1>
+    <section class="grid1 grid2">
     {% for completed_shift in completed_shifts %}
-    <div class="card">
-        <p>Company Name: {{ completed_shift['comp_name'] }}</p>
-        <p>Shift Date: {{ completed_shift['shift_date'] }}</p>
-        <p>Shift Type: {{ completed_shift['shift_type'] }}</p>
-        <p>Booking Date: {{ completed_shift['booking_date'] }}</p>
+    <div class="cards1">
+        <div class="card-body">
+        <h1>Shift Type: {{ completed_shift['shift_type'] }}</h1>
+        <h2>Company Name: {{ completed_shift['comp_name'] }}</h2>
+        <h2>Shift Date: {{ completed_shift['shift_date'] }}</p>
+        <h2>Booking Date: {{ completed_shift['booking_date'] }}</h2>
         <!-- Add other details you want to display in the card -->
-        <a href="{{ url_for('bookedShiftDetails', booking_id=completed_shift['booking_id']) }}">View Details</a>
+        <a href="{{ url_for('bookedShiftDetails', booking_id=completed_shift['booking_id']) }}  " style="display: block; font-weight: bold ; font-size: large; color: floralwhite; text-align: center; margin-top: 10px;">View Details</a>
     </div>
+</div>
     {% endfor %}
+</section>
 </body>
 </html>

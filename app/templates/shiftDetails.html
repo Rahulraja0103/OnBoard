@@ -11,9 +11,9 @@
 </head>
 <body>
     <div class="container">
+        <div class="cards2">
         <h1 class="mt-4">Shift Details</h1>
         <!-- Render shift details here -->
-        <p>Shift ID: {{ shift['shift_id'] }}</p>
         <p>Company ID: {{ shift['companyId'] }}</p>
         <p>Shift Date: {{ shift['shift_date'] }}</p>
         <p>Shift Type: {{ shift['shift_type'] }}</p>
@@ -21,14 +21,14 @@
         <p>End Time: {{ shift['end_time'] }}</p>
         <p>Department Name: {{ shift['department_name'] }}</p>
         <p>Supervisor Name: {{ shift['supervisor_name'] }}</p>
-        <p>No. of Workers: {{ shift['num_workers'] }}</p>
         <p>Notes: {{ shift['notes'] }}</p>
 
         <!-- Book button -->
         <form method="post" action="/bookShift">
             <input type="hidden" name="shiftId" value="{{ shift['shift_id'] }}">
-            <button type="submit" class="btn btn-success">Book</button>
+            <button type="submit" class="btn_Book">Book</button>
         </form>
+        </div>
     </div>
 </body>
 </html>

@@ -8,20 +8,24 @@
     {% include 'nav.html' %}
 </head>
 <body>
+    <div class="container">
+        <div class="cards2">
     <h1>Booked Shift Details</h1>
     <p>Company Name: {{ booked_shift['comp_name'] }}</p>
     <p>Shift Date: {{ booked_shift['shift_date'] }}</p>
     <p>Shift Type: {{ booked_shift['shift_type'] }}</p>
     <p>Booking Date: {{ booked_shift['booking_date'] }}</p>
-    <form method="post" action="{{ url_for('update_status', shift_id=booked_shift['shift_id']) }}">
+    <form method="post" class="onBoard" style="margin-left: 200px;" action="{{ url_for('update_status', shift_id=booked_shift['shift_id']) }}">
         <!-- <input type="hidden" name="new_status" value="completed"> -->
-        <label for="new_status">Status:</label>
+        <label for="new_status">Shift Status:</label>
         <select id="new_status" name="new_status">
             <option value="1" {% if booked_shift['shiftStatus_Id'] == 1 %}selected{% endif %}>Pending</option>
             <option value="2" {% if booked_shift['shiftStatus_Id'] == 2 %}selected{% endif %}>In Progress</option>
             <option value="3" {% if booked_shift['shiftStatus_Id'] == 3 %}selected{% endif %}>Completed</option>
         </select>
-        <button type="submit">Update Status</button>
+        <button class="btn_Update" type="submit">Update Status</button>
     </form>
+</div>
+</div>
 </body>
 </html>
