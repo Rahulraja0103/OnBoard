@@ -4,69 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'mainNav.html' %}
     <style>
-        /* Reset default margin and padding for cleaner layout */
-        body, ul {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Apply a nice background color and center the content */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* Style the heading */
+        /* Add any additional CSS styles specific to this page */
+        /* For example, you can style the <h1> element */
         h1 {
-            color: #008080;
-            margin-bottom: 20px;
+            text-align: center;
+            margin-top: 100px;
+            font-size: 2rem;
         }
-
-        /* Style the navigation menu */
-        ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column; /* Display items in a column */
-            align-items: center; /* Center items horizontally */
-            padding: 0;
-        }
-
-        li {
-            margin: 10px 0; /* Add vertical margin between items */
-        }
-
-        a {
-            text-decoration: none;
-            color: #333;
-            padding: 8px 15px;
-            border: 1px solid #008080;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        a:hover {
-            background-color: #8d969a;
-            color: #fff;
-        }
-
-        /* Logo settings remain unchanged */
-        img {
-            max-width: 200px;
-            height: auto;
-        }
-
     </style>
 </head>
 <body>
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="OnBoard">
-    <h1>Welcome to OnBoard</h1>
-    <ul>
-        <li><a href="/signin">Login</a></li>
-        <li><a href="/registerUser">Register User</a></li>
-        <li><a href="/registerCompany">Register Company</a></li>
-    </ul>
+    <!-- Include the main navigation from mainNav.html -->
+    
+    <div >
+        <h1>Welcome to Your Website</h1>
+        <!-- Add more content as needed -->
+    </div>
 </body>
 </html>
