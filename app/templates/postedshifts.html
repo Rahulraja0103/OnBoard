@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posted Shifts</title>
+    {% include 'companyNav.html' %}
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        body {
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(61, 52, 52, 0.7);
+            border-radius: 10px;
+        }
+
+        .add-shift-btn {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #03045E;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .add-shift-btn {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #03045E;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .shift-table {
+            width: 75%;
+            border-collapse: collapse;
+        }
+
+        .shift-table th,
+        .shift-table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .shift-table th {
+            background-color: #03045E;
+        }
+        
+
+        .shift-table a:hover {
+            text-decoration: underline;
+            
+        }
+    </style>
+</head>
+
+<body style="background-image: url('/static/images/bg3.jpg')">
+    <div class="container" style="margin: 20px auto; width: 75%;">
+    <a href="/addShift" class="btn_add">Add New Shift</a>
+
+        <h1 style="text-align: center;">Posted Shifts</h1>
+        <table class="shift-table">
+            <tr>
+                <th>Date</th>
+                <th>Shift Type</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Department Name</th>
+                <th>Supervisor Name</th>
+                <th>Number of Workers</th>
+                <th>Notes</th>
+            </tr>
+            {% for shift in posted_shifts %}
+            <tr>
+                <td>{{ shift['shift_date'] }}</td>
+                <td>{{ shift['shift_type'] }}</td>
+                <td>{{ shift['start_time'] }}</td>
+                <td>{{ shift['end_time'] }}</td>
+                <td>{{ shift['department_name'] }}</td>
+                <td>{{ shift['supervisor_name'] }}</td>
+                <td>{{ shift['num_workers'] }}</td>
+                <td>{{ shift['notes'] }}</td>
+                <td class="edit-shift-btn"><a href="/editshift/{{ shift['shift_id'] }}">Edit</a></td>
+                <td class="edit-shift-btn"><a href="/deleteshift/{{ shift['shift_id'] }}">Delete</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>All Shifts</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        {% include 'companyNav.html' %}
+    </head>
+<body style="background-image: url('/static/images/bg3.jpg')">
+
+    <!-- <table>
+        <tr>
+            <th>Shift Type</th>
+            <th>Shift Date</th>
+            <th>Payment Status</th>
+            <th>Update Status</th>
+        </tr>
+        {% for shift in pending_shifts %}
+        <tr>
+            <td>{{ shift['shift_type'] }}</td>
+            <td>{{ shift['shift_date'] }}</td>
+            <td>{{ shift['paymentStatus_Id'] }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('update_payment_status', shift_id=shift['shift_id']) }}">
+                    <select name="new_status">
+                        <option value="2">Paid</option>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+    <div class="container" style="margin: 20px auto; width: 75%;"></div>
+    <h1 style="text-align: center;">Pending Payments</h1>
+        <table class="shift-table">
+            <tr>
+                <th>Date</th>
+                <th>Shift Type</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Department Name</th>
+                <th>Supervisor Name</th>
+
+            </tr>
+            {% for pending_shift in pending_shifts %}
+            <tr>
+                <td>{{ pending_shift['shift_date'] }}</td>
+                <td>{{ pending_shift['shift_type'] }}</td>
+                <td>{{ pending_shift['start_time'] }}</td>
+                <td>{{ pending_shift['end_time'] }}</td>
+                <td>{{ pending_shift['department_name'] }}</td>
+                <td>{{ pending_shift['supervisor_name'] }}</td>
+                <td>{{ pending_shift['paymentStatus_Id'] }}</td>
+                
+                <td class="edit-shift-btn"><a href="/update_payment_status/{{ pending_shift['shift_id'] }}">Pay</a></td>
+               
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

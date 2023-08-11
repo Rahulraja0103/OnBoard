@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Shifts</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'nav.html' %}
+</head>
+<body style="background-image: url('/static/images/bg3.jpg')">
+    <h1 style="text-align: center;">Completed Shifts</h1>
+    <section class="grid1 grid2">
+    {% for completed_shift in completed_shifts %}
+    <div class="cards1">
+        <div class="card-body">
+        <h1>Shift Type: {{ completed_shift['shift_type'] }}</h1>
+        <h2>Company Name: {{ completed_shift['comp_name'] }}</h2>
+        <h2>Shift Date: {{ completed_shift['shift_date'] }}</p>
+        <h2>Booking Date: {{ completed_shift['booking_date'] }}</h2>
+        <!-- Display payment status based on paymentStatus_Id -->
+        <h2>Payment Status: </h2>
+        {% if completed_shift['paymentStatus_Id'] == 1 %}
+         <span class="status-badge pending">Pending</span>
+        {% elif completed_shift['paymentStatus_Id'] == 2 %}
+            <span class="status-badge paid">Paid</span>
+        {% elif completed_shift['paymentStatus_Id'] == 3 %}
+            <span class="status-badge unknown">Unknown</span>
+        {% endif %}
+
+        <!-- Add other details you want to display in the card -->
+        <a href="{{ url_for('bookedShiftDetails', booking_id=completed_shift['booking_id']) }}  " style="display: block; font-weight: bold ; font-size: large; color: floralwhite; text-align: center; margin-top: 10px;">View Details</a>
+    </div>
+</div>
+    {% endfor %}
+</section>
+</body>
+</html>
