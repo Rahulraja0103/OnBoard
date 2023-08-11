@@ -75,6 +75,20 @@ FOREIGN KEY (paymentStatus_Id) REFERENCES paymentStatus(statusId);
 ALTER TABLE company_shifts
 ADD COLUMN pay_rate FLOAT
 
+CREATE TABLE logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp DATETIME NOT NULL,
+    message TEXT
+);
+
+CREATE TABLE feedbacl (
+    feedbackid INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    feedback VARCHAR(255) NOT NULL
+);
+
+
 
 
 

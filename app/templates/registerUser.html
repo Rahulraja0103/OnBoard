@@ -8,79 +8,132 @@
     <title>Register User</title>
     <!-- InBuild CSS -->
     <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        /* Custom styles for the register user page */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+
+        }
+
+        .mainForm {
+            background-color: rgba(198, 229, 182, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .backButton {
+            width: 30px;
+            height: auto;
+        }
+        .headerLogocred {
+            width: 130px;
+            height: auto;
+            
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .registerbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4690df;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .registerbutton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-                <!-- Register Form -->
-                <form method="POST">
-                  <div class="container">
-                    <a href="/userTab">
-                        <img class="backButton" alt="" src="/static/images/back.png" width="100" height="80">
-                    </a> 
-                    </div> 
-                  <div class="col-sm-12 text-center">
-                    <!-- Logo -->
-                    <a href="/">
-                        <img class="headerLogocred" alt="" src="/static/images/OnBoardLogo.jpg" width="100" height="80">
-                    </a> 
-                </div>
-                    <div class="form-group">
-                      <label for="firstname">First Name : </label>
-                      <input type="text" name="firstname" class="form-control" id="firstname">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname">Last Name : </label>
-                        <input type="text" name="lastname" class="form-control" id="lastname">
-                      </div>
-                    <div class="form-group">
-                      <label for="email">Email : </label>
-                      <input type="email" name="email" class="form-control" id="email">
-                    </div>
-                    <div class="form-group">
-                      <label for="password">Password : </label>
-                      <input type="password" name="password" class="form-control" id="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="phoneNo">Phone No : </label>
-                        <input type="text" name="phoneNo" class="form-control" id="phoneNo">
-                      </div>
-                      <div class="form-group">
-                        <label for="location">Location : </label>
-                        <input type="text" name="location" class="form-control" id="location">
-                      </div>
-                      <div class="form-group">
-                        <label for="skills">Skills : </label>
-                        <input type="text" name="skills" class="form-control" id="skills">
-                      </div>
-                      <div class="form-group">
-                        <label for="workPermit">WorkPermit : </label>
-                        <input type="text" name="workPermit" class="form-control" id="workPermit">
-                      </div>
-                      <div class="form-group">
-                        <label for="sin">SIN : </label>
-                        <input type="text" name="sin" class="form-control" id="sin">
-                      </div>
-                      <div class="form-group">
-                        <label for="availability">Availability : </label>
-                        <input type="text" name="availability" class="form-control" id="availability">
-                      </div>
-                      <div class="form-group">
-                        <label for="regDate">Registration Date : </label>
-                        <input type="date" name="regDate" class="form-control" id="regDate">
-                      </div>
-                    <div class="form-group">
-                        <!-- <p>User Type</p> <br>
-                        <label>
-                            <input type="radio" name="option_radio" value="jobseeker"> jobseeker
-                        </label>
-                        <br>
-                        <label>
-                            <input type="radio" name="option_radio" value="company"> company
-                        </label>
-                      </div> -->
-                    <button type="submit" class="registerbutton">Register</button>
-                </form>
+        <div style="clear: both;"></div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
     </div>
-
+        <!-- Register Form -->
+        <form class="mainForm" method="POST">
+            <div class="container">
+                <a href="/userTab">
+                    <img class="backButton" alt="" src="/static/images/previous.png" width="30" height="24">
+                </a>
+            </div>
+            <div class="col-sm-12 text-center">
+                <!-- Logo -->
+                <a href="/">
+                    <img class="headerLogocred" alt="" src="/static/images/OnBoardLogo.png" width="100" height="80">
+                </a>
+            </div>
+            <div class="form-group">
+                <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="text" name="phoneNo" class="form-control" id="phoneNo" placeholder="Phone No">
+            </div>
+            <div class="form-group">
+                <input type="text" name="location" class="form-control" id="location" placeholder="Location">
+            </div>
+            <div class="form-group">
+                <input type="text" name="skills" class="form-control" id="skills" placeholder="Skills">
+            </div>
+            <div class="form-group">
+                <input type="text" name="workPermit" class="form-control" id="workPermit" placeholder="Work Permit">
+            </div>
+            <div class="form-group">
+                <input type="text" name="sin" class="form-control" id="sin" placeholder="SIN">
+            </div>
+            <div class="form-group">
+                <input type="text" name="availability" class="form-control" id="availability" placeholder="Availability">
+            </div>
+            <div class="form-group">
+                <input type="date" name="regDate" class="form-control" id="regDate" placeholder="Registration Date">
+            </div>
+            <button type="submit" class="registerbutton">Register</button>
+        </form>
+    </div>
 </body>
 </html>

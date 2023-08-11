@@ -18,7 +18,7 @@ nav .containerMain {
   text-align: center;
   padding: 20px;
   border: 1px solid #ccc;
-  background-color: #b2e6fd;
+  background: linear-gradient(90deg, #9ac9b2, #5f8180);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,7 +30,7 @@ nav .container {
   text-align: center;
   padding: 20px;
   border: 1px solid #ccc;
-  background-color: #6ec2e6;
+  background-color: #88b2d8;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -81,8 +81,10 @@ nav ul li a:hover {
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px; /* Adjust the maximum width as needed */
-    text-align: left;
-
+    background-image: url('bg3.jpg'); /* Set the background image URL */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     
   }
 
@@ -96,7 +98,7 @@ nav ul li a:hover {
 .loginbutton, .btn_Book{
   width: 50%;
   font-size: 22px;
-  background-color: #012a4a ;
+  background-color: #4690df ;
   /* rgb(77, 77, 193); */
   color: white;
   font-family: Work Sans, sans-serif;
@@ -105,11 +107,13 @@ nav ul li a:hover {
   height: 50px;
   border-radius: 4px;
   margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.registerbutton{
+.registerbutton, .btn_edit{
   width: 50%;
   font-size: 22px;
-  background-color: #012a4a ;
+  background-color: #4690df ;
   /* rgb(77, 77, 193); */
   color: white;
   font-family: Work Sans, sans-serif;
@@ -118,19 +122,23 @@ nav ul li a:hover {
   height: 50px;
   border-radius: 4px;
   margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.btn_Update{
+.btn_Update {
   width: 75%;
   font-size: 22px;
-  background-color: #012a4a ;
+  background-color: #4690df ;
   /* rgb(77, 77, 193); */
   color: white;
   font-family: Work Sans, sans-serif;
   border: 0px;
   padding: 10px;
+  cursor: pointer;
   height: 50px;
-  border-radius: 4px;
+  border-radius: 5px;
   margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
   a{
     font-family: Work Sans, sans-serif;
@@ -171,13 +179,13 @@ nav ul li a:hover {
     padding: 20px;
     text-decoration: none;
   }
-form .formView, .loginform{
+form .formView, .loginform, .mainForm{
     margin-top: 50px;
     margin-right: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
 }
-  form .formData, .loginform{
+  form .formData, .loginform, .mainForm{
     width: 50%;
     /* border: 3px solid white; */
     /* box-shadow: 0 0 10px #2c2c2c; */
@@ -190,6 +198,7 @@ form .formView, .loginform{
     font-family: Work Sans, sans-serif;
     text-align: center;
 }
+
 label{
     width: 70%;
     display: inline-block; 
@@ -291,7 +300,7 @@ margin: 20px auto;
   content: "";
   display: table;
   clear: both;
-  background-color: #2990bc;
+  background-color: rgba(198, 229, 182, 0.6);
   margin: 20px auto;
 }
 
@@ -302,9 +311,10 @@ margin: 20px auto;
   border-radius: 15px;
   content: "";
   display: table;
-  background-color: #2990bc;
+  background-color: rgba(198, 229, 182, 0.6);
   margin: 20px auto;
   text-align: center;
+  font-family: Work Sans, sans-serif;
 }
 .cards1:after{
  
@@ -316,3 +326,143 @@ margin: 20px auto;
   .card-body{
     text-align: center; 
   }
+
+  /* Jashmitha */
+  
+.btn_add {
+  display: block;
+  width: 150px;
+  padding: 10px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #001a2f ;
+  /* rgb(77, 77, 193); */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.shift-table {
+    width: 75%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin:  20px auto;
+}
+
+.shift-table th, .shift-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.shift-table th {
+    background-color: #f2f2f2;
+}
+
+.shift-table tr:hover {
+    background-color:#5202c3;
+}
+
+.shift-table a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.shift-table a:hover {
+    background-color: #0056b3;
+}
+
+.shift-table a[href^="/deleteshift"] {
+  background-color: #FF0000; /* Change to red color */
+}
+/* Styles for badges */
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.pending {
+  background-color: #FFC107;
+  color: #333;
+}
+
+.paid {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.overdue {
+  background-color: #F44336;
+  color: #fff;
+}
+
+.unknown {
+  background-color: #9E9E9E;
+  color: #fff;
+}
+
+/* Styles for tags */
+.status-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.pending {
+  background-color: #FFC107;
+  color: #333;
+}
+
+.paid {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.overdue {
+  background-color: #F44336;
+  color: #fff;
+}
+
+.unknown {
+  background-color: #9E9E9E;
+  color: #fff;
+}
+
+/* Styles for status bar */
+.status-bar {
+  display: flex;
+  height: 10px;
+  margin-top: 5px;
+}
+
+.status-segment {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.pending {
+  background-color: #FFC107;
+}
+
+.paid {
+  background-color: #4CAF50;
+}
+
+.overdue {
+  background-color: #F44336;
+}
+.flashes{
+  font-size: 24px;
+  color: maroon;
+  font-family: Work Sans, sans-serif;
+  font-weight: bold;
+}

@@ -5,9 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <link rel="stylesheet" href="/static/css/main.css">
-    {% include 'nav.html' %}
+    {% include 'mainNav.html' %}
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #eee9dc;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+            background-color: rgba(61, 52, 52, 0.7); /* Semi-transparent background color */
+            border-radius: 20px; /* Add rounded corners */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>About Us</h1>
+        <p>At OnBoard, we're driven by a passion for connecting businesses and talented individuals in an innovative and seamless way. Our platform is designed to bridge the gap between employers seeking skilled workers and individuals seeking meaningful work opportunities.</p>
+
+        <p>Join us in revolutionizing the way work is discovered and experienced. Together, we're shaping the future of workforce engagement.</p>
+    </div>
 </body>
 </html>

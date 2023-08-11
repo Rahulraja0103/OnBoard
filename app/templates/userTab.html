@@ -6,8 +6,75 @@
     <title>Workers</title>
     <link rel="stylesheet" href="/static/css/main.css">
     {% include 'mainNav.html' %}
+    <style>
+        /* Add custom styles here */
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #0660c0;
+            margin: 20px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .register-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 24px;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .image {
+            width: 85%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-on-button {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>    
 </head>
-<body>
-    <h1><a href="/registerUser">Register User</a></a></h1>
+
+<body style="background-image: url('/static/images/bg3.jpg'); background-size: cover;">
+    <div class="container">
+        <h1>Join our vibrant community of talented individuals!</h1>
+        <p class="text-on-button">Register now to unlock exciting opportunities.</p>
+        <a href="/registerUser" class="register-button">Register Now</a>
+        <img class="image" src="/static/images/ut.webp" alt="Your Image Description">
+    </div>
 </body>
 </html>

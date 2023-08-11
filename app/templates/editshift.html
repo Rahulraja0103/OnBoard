@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Shift</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        /* Custom styles for the edit shift page */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .mainForm {
+            background-color: rgba(198, 229, 182, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .headerLogocred {
+            width: 140px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .registerbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4690df;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .registerbutton:hover {
+            background-color: #0056b3;
+        }
+
+        .backButton {
+            width: 30px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Shift</h1>
+
+        {% if message %}
+            <div class="message">{{ message }}</div>
+        {% endif %}
+        <form class="mainForm" method="POST" action="/editshift/{{ shift['shift_id'] }}">
+            <!-- <div class="container">
+                <a href="/postedshifts">
+                    <img class="backButton" alt="" src="/static/images/back.png" width="100" height="80">
+                </a> 
+                </div>  -->
+                <div class="col-sm-12 text-center">
+                    <!-- Back Button -->
+                    <a href="/postedshifts">
+                        <img class="backButton" alt="" src="/static/images/previous.png" width="50" height="40">
+                    </a>
+                </div>
+              <div class="col-sm-12 text-center">
+                <!-- Logo -->
+                <a href="/">
+                    <img class="headerLogocred" alt="" src="/static/images/OnBoardLogo.png" width="100" height="80">
+                </a> 
+            </div>
+            <label for="shift_date">Date:</label>
+            <input type="date" id="shift_date" name="shift_date" value="{{ shift['shift_date'] }}" required>
+
+            <label for="shift_type">Shift Type:</label>
+            <input type="text" id="shift_type" name="shift_type" value="{{ shift['shift_type'] }}" required>
+
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time" value="{{ shift['start_time'] }}" required>
+
+            <label for="end_time">End Time:</label>
+            <input type="time" id="end_time" name="end_time" value="{{ shift['end_time'] }}" required>
+
+            <label for="department_name">Department Name:</label>
+            <input type="text" id="department_name" name="department_name" value="{{ shift['department_name'] }}" required>
+
+            <label for="supervisor_name">Supervisor Name:</label>
+            <input type="text" id="supervisor_name" name="supervisor_name" value="{{ shift['supervisor_name'] }}" required>
+
+            <label for="num_workers">Number of Workers:</label>
+            <input type="number" id="num_workers" name="num_workers" value="{{ shift['num_workers'] }}" required>
+
+            <label for="notes">Notes:</label>
+            <input type="text" textarea id="notes" name="notes" rows="4" value="{{ shift['notes'] }}" required>
+
+            <button class="btn_edit" type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>
