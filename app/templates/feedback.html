@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'nav.html' %}
+    <style>
+        /* Custom styles for the feedback form */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .mainForm {
+            background-color: rgba(198, 229, 182, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .backButton {
+            width: 30px;
+            height: auto;
+        }
+
+        .headerLogocred {
+            width: 130px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submitbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4690df;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submitbutton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Feedback Form -->
+        <form class="mainForm" method="POST">
+            <h1 style="font-size: 26px; font-family: Work Sans, sans-serif;font-weight: bold;color: rgb(26, 48, 5);">Feedback Form</h1>
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="feedback" class="form-control" id="feedback" placeholder="Feedback" required>
+            </div>
+            <button type="submit" class="submitbutton">Submit Feedback</button>
+        </form>
+    </div>
+</body>
+</html>

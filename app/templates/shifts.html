@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Shifts</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% include 'nav.html' %}
+    <style>
+        /* Custom styles for the All Shifts page */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .cards1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(198, 229, 182, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+        }
+
+
+.view-details:hover {
+    background-color: #d0d0d0;
+}
+
+
+        .view-details:hover {
+            background-color: #d0d0d0;
+        }
+
+        .btn_Book {
+            background-color: #4690df;
+            color: floralwhite;
+            font-weight: bold;
+            font-size: large;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn_Book:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body style="background-image: url('/static/images/bg3.jpg')">
+
+<div class="container">
+    <h1 style="text-align: center;">Available Shifts</h1>
+    <section class="grid1 grid2">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        {% for shift in shifts %}
+        <div class="cards1">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h1 class="card-title">{{ shift['shift_type'] }}</h1>
+                    <h2 class="card-text">Company Name: {{ company_names[shift['companyId']] }}</h2>
+                    <h2 class="card-text">Shift Date: {{ shift['shift_date'] }}</h2>
+                    <!-- <p class="card-text">Start Time: {{ shift['start_time'] }}</p>
+                    <p class="card-text">End Time: {{ shift['end_time'] }}</p> -->
+                    <!-- Add other shift details as needed -->
+                    <a href="/shiftDetails/{{ shift['shift_id'] }}" class="btn btn-primary" style="display: block; font-weight: bold ; font-size: large; font-family: Work Sans, sans-serif; color: rgb(141, 95, 4); text-align: center; margin-top: 10px;">View Details</a>
+                    <form method="post" action="/bookShift"  id="bookForm{{ shift['shift_id'] }}">
+                        <input type="hidden" name="shiftId" value="{{ shift['shift_id'] }}">
+                        <button type="button" class="btn_Book" onclick="showConfirmation('{{ shift['shift_id'] }}')">Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>  
+    </div>
+    {% endfor %}
+  </section>
+</div>
+
+<!--#Prashanth-->
+<script>
+    function showConfirmation(shiftId) {
+        if (confirm("Are you sure you want to book this shift?")) {
+            // If the user confirms, submit the form
+            document.getElementById('bookForm' + shiftId).submit();
+        } else {
+            // If the user cancels, do nothing
+        }
+    }
+</script>
+</body>
+</html>

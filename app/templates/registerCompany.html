@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register Company</title>
+    <!-- InBuild CSS -->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        /* Custom styles for the register company page */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .mainForm {
+            background-color: rgba(198, 229, 182, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .headerLogocred {
+            width: 140px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 20px;
+            
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .registerbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4690df;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .registerbutton:hover {
+            background-color: #0056b3;
+        }
+
+        .backButton {
+            width: 30px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    </div>
+    <div class="container">
+        <!-- Register Form -->
+        <form class="mainForm" method="POST">
+            <div class="col-sm-12 text-center">
+                <!-- Back Button -->
+                <a href="/companyTab">
+                    <img class="backButton" alt="" src="/static/images/previous.png" width="50" height="40">
+                </a>
+            </div>
+            <div class="col-sm-12 text-center">
+                <!-- Logo -->
+                <a href="/">
+                    <img class="headerLogocred" alt="" src="static/images/OnBoardLogo.png" width="100" height="80">
+                </a>
+            </div>
+            <div class="form-group">
+                <input type="text" name="compname" class="form-control" id="compname" placeholder="Company Name">
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="text" name="phoneNo" class="form-control" id="phoneNo" placeholder="Phone No">
+            </div>
+            <div class="form-group">
+                <input type="text" name="location" class="form-control" id="location" placeholder="Location">
+            </div>
+            <div class="form-group">
+                <input type="text" name="industry" class="form-control" id="industry" placeholder="Industry">
+            </div>
+            <div class="form-group">
+                <input type="text" name="description" class="form-control" id="description" placeholder="Description">
+            </div>
+            <div class="form-group">
+                <input type="date" name="regDate" class="form-control" id="regDate" placeholder="Registration Date">
+            </div>
+            <button type="submit" class="registerbutton">Register</button>
+        </form>
+    </div>
+</body>
+</html>

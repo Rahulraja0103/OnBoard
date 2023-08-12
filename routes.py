@@ -26,7 +26,7 @@ from datetime import datetime
 
 # Load the database schema from config.sql
 #run_sql_file('app/dbConfig.sql')
-
+#For database logs
 def insert_log(message):
     cur = mysql.connection.cursor()
     insert_query = "INSERT INTO logs (timestamp, message) VALUES (NOW(), %s)"
