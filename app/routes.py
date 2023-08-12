@@ -54,6 +54,10 @@ def aboutUs():
 def feedback():
     return render_template("feedback.html")
 
+@app.route("/feedbackSuccess")
+def feedbackSuccess():
+    return render_template("feedbackSuccess.html")
+
 #Routes for Login Page
 @app.route("/login",methods=["GET", "POST"])
 def login():
@@ -97,7 +101,7 @@ def login():
                 if sha256_crypt.verify(provided_password_comp, stored_password_hash_comp):
                     session['comp'] = query_company['comp_name']
                     session['email'] = query_company['email']
-                    log_message = f"User {query_company['comp_name']} logged in successfully"
+                    log_message = f"Company {query_company['comp_name']} logged in successfully"
                     insert_log(log_message)
                     return redirect('/postedshifts')  # Redirect to the Company page after successful login
                 else:
@@ -141,17 +145,10 @@ def registerUser():
         cur.execute(query_exists_user, (Email,))
         exists_user = cur.fetchone()
 
-        # cur.execute("SELECT * FROM users Where email = % s", (Email, ))
-        # account = cur.fetchone()
+
         if exists_user:
             flash("Account already exists","warning")
             return redirect('registerUser')
-        # elif not re.match(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$', Password):
-        #     #  flash("Account already exists","warning")
-        #      message = 'Passwords must have at least one letter, one number, and one special character. !'
-        # elif not FirstName or not Password or not Email:
-            #  flash("Account already exists","warning")
-            # message = "please fill out the form !"
         else:
 
         # Insert the user into the database
@@ -197,8 +194,18 @@ def registerCompany():
         # Create a MySQL cursor
         cur = mysql.connection.cursor()
 
+        query_exists_company = "SELECT email FROM company WHERE email = %s"
+        cur.execute(query_exists_company, (Email,))
+        exists_company = cur.fetchone()
+
+
+        if exists_company:
+            flash("Account already exists","warning")
+            return redirect('registerCompany')
+        else:
+
         # Insert the user into the database
-        cur.execute("INSERT INTO company (comp_name, email, _password,phone_number,_location,industry,_description,registration_date) VALUES (%s, %s, %s,%s,%s, %s, %s,%s)", (CompanyName,Email,hashed_password,PhoneNumber,Location,Industry,Description,RegDate))
+            cur.execute("INSERT INTO company (comp_name, email, _password,phone_number,_location,industry,_description,registration_date) VALUES (%s, %s, %s,%s,%s, %s, %s,%s)", (CompanyName,Email,hashed_password,PhoneNumber,Location,Industry,Description,RegDate))
 
         # Commit the changes to the database
         mysql.connection.commit()
@@ -590,8 +597,6 @@ def posted_shifts():
         query_fetch_shifts = "SELECT cs.* FROM company_shifts cs INNER JOIN company c ON c.companyId=cs.companyId WHERE c.comp_name = %s ;"
         cur.execute(query_fetch_shifts, (comp_name,))
 
-
-        print(comp_name)
         # Fetch all posted shifts
         posted_shifts_data = cur.fetchall()
 
@@ -742,7 +747,7 @@ def update_payment_status(shift_id):
             shift_status = cur.fetchone()
             print(shift_status)
 
-            if (shift_status == 3):
+            if (shift_status['shiftStatus_Id'] == 3):
                 query_update_status = "UPDATE bookedshift SET paymentStatus_Id = %s WHERE shift_id = %s"
                 cur.execute(query_update_status, (new_status, shift_id))
                 mysql.connection.commit()
@@ -786,9 +791,9 @@ def feedbackform():
         # Redirect to the login page or any other page you want
         log_message = f"User {Name} has given feedback "
         insert_log(log_message)
-        return redirect(url_for('feedback'))
+        return redirect(url_for('feedbackSuccess'))
 
-    return render_template('onBoard.html')  # Assuming you have a 'register.html' template
+    return render_template('feedback.html')  # Assuming you have a 'register.html' template
         
 
 

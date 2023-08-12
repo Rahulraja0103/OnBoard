@@ -77,23 +77,12 @@
     </style>
 </head>
 <body>
-    <div>
-        {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
-    </div>
     <div class="container">
         <!-- Register Form -->
         <form class="mainForm" method="POST">
             <div class="col-sm-12 text-center">
                 <!-- Back Button -->
-                <a href="/companyTab">
+                <a href="/feedback">
                     <img class="backButton" alt="" src="/static/images/previous.png" width="50" height="40">
                 </a>
             </div>
@@ -103,31 +92,7 @@
                     <img class="headerLogocred" alt="" src="static/images/OnBoardLogo.png" width="100" height="80">
                 </a>
             </div>
-            <div class="form-group">
-                <input type="text" name="compname" class="form-control" id="compname" placeholder="Company Name">
-            </div>
-            <div class="form-group">
-                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <input type="text" name="phoneNo" class="form-control" id="phoneNo" placeholder="Phone No">
-            </div>
-            <div class="form-group">
-                <input type="text" name="location" class="form-control" id="location" placeholder="Location">
-            </div>
-            <div class="form-group">
-                <input type="text" name="industry" class="form-control" id="industry" placeholder="Industry">
-            </div>
-            <div class="form-group">
-                <input type="text" name="description" class="form-control" id="description" placeholder="Description">
-            </div>
-            <div class="form-group">
-                <input type="date" name="regDate" class="form-control" id="regDate" placeholder="Registration Date">
-            </div>
-            <button type="submit" class="registerbutton">Register</button>
+            <h1>Feedback Submitted Successfully</h1>
         </form>
     </div>
 </body>
